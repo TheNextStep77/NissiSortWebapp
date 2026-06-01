@@ -54,7 +54,8 @@
       </a>
       <div class="nav-links">
         <a href="#home" class="active">Home</a>
-        <a href="#processor">Process</a>
+        <a href="#processor">Trailer Sort</a>
+        <a href="#consolidator">Scan Consolidator</a>
       </div>
       <button class="nav-cta" id="get-started-btn" type="button">Get Started</button>
     </div>
@@ -64,10 +65,10 @@
        HERO SECTION
        ═══════════════════════════════════════════════════ -->
   <section id="home" class="hero">
-    <span class="hero-badge">Excel Processing Engine</span>
+    <span class="hero-badge">Data Processing Suite</span>
     <h1>Nissi Fulfillment<br>and Distribution</h1>
-    <p>Upload trailer spreadsheets, configure sort ranges, and generate processed Excel outputs with intelligent SORT allocation — all in your browser.</p>
-    <button class="hero-cta" id="hero-cta-btn" type="button">Start Processing</button>
+    <p>Trailer SORT allocation and scan data consolidation — two powerful tools for your fulfillment workflow, running entirely in your browser.</p>
+    <button class="hero-cta" id="hero-cta-btn" type="button">Get Started</button>
   </section>
 
   <!-- ═══════════════════════════════════════════════════
@@ -269,6 +270,78 @@
     </div>
   </section>
 
+  <!-- ═══════════════════════════════════════════════════
+       SCAN CONSOLIDATOR SECTION
+       ═══════════════════════════════════════════════════ -->
+  <section id="consolidator" class="section">
+    <div class="container">
+      <h2 class="section-title">Scan Consolidator</h2>
+
+      <div class="wizard-card">
+        <!-- Upload area -->
+        <div id="sc-upload-view">
+          <h2>Consolidate Scan Files</h2>
+          <p class="step-desc">Upload multiple <strong>.txt</strong> files (e.g. from handheld scanners). They will be merged into one Excel file with a Raw Data sheet and a Summary sheet showing unique entries with counts.</p>
+
+          <div id="sc-upload-zone" class="upload-zone" tabindex="0" role="button" aria-label="Upload text files">
+            <div class="upload-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="14 2 14 8 20 8" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="12" y1="18" x2="12" y2="12" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round"/>
+                <polyline points="9 15 12 12 15 15" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Upload Text Files</h3>
+            <p>Drag &amp; drop your <strong>.txt</strong> scan files here, or click to browse.</p>
+            <input type="file" id="sc-file-input" multiple accept=".txt,.csv,.log" hidden aria-label="Choose text files">
+            <button class="btn btn-primary" id="sc-browse-btn" type="button">Browse Files</button>
+            <div class="supported">Accepts .txt, .csv, and .log files — one scanned entry per line</div>
+          </div>
+
+          <div id="sc-file-list" class="hidden" style="margin-top:16px;"></div>
+
+          <div class="btn-group hidden" id="sc-action-btns">
+            <button class="btn btn-secondary" id="sc-clear-btn" type="button">Clear All</button>
+            <button class="btn btn-primary" id="sc-process-btn" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Consolidate &amp; Download
+            </button>
+          </div>
+        </div>
+
+        <!-- Processing spinner -->
+        <div id="sc-processing-view" class="processing-view hidden">
+          <div class="spinner-ring"></div>
+          <h2>Consolidating Files</h2>
+          <p>Reading entries, building frequency table, generating Excel…</p>
+        </div>
+
+        <!-- Results -->
+        <div id="sc-results-view" class="results-view hidden">
+          <div class="success-badge">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="22 4 12 14.01 9 11.01" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h2>Consolidation Complete</h2>
+          <div class="stats-grid" id="sc-stats-grid"></div>
+          <div class="btn-group" style="justify-content:center; flex-wrap:wrap;">
+            <button class="btn btn-success" id="sc-download-btn" type="button">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Excel
+            </button>
+            <button class="btn btn-outline" id="sc-start-over-btn" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              Consolidate More Files
+            </button>
+          </div>
+        </div>
+      </div><!-- /.wizard-card -->
+    </div>
+  </section>
+
 
 
   <!-- ─── Footer ──────────────────────────────────────── -->
@@ -304,6 +377,146 @@
     }
   </script>
   <script type="module" src="js/app.js"></script>
+  <script type="module">
+    import { consolidateTextFiles } from './js/consolidator.js';
+
+    const scUploadZone = document.getElementById('sc-upload-zone');
+    const scFileInput = document.getElementById('sc-file-input');
+    const scBrowseBtn = document.getElementById('sc-browse-btn');
+    const scFileList = document.getElementById('sc-file-list');
+    const scActionBtns = document.getElementById('sc-action-btns');
+    const scClearBtn = document.getElementById('sc-clear-btn');
+    const scProcessBtn = document.getElementById('sc-process-btn');
+    const scUploadView = document.getElementById('sc-upload-view');
+    const scProcessingView = document.getElementById('sc-processing-view');
+    const scResultsView = document.getElementById('sc-results-view');
+    const scStatsGrid = document.getElementById('sc-stats-grid');
+    const scDownloadBtn = document.getElementById('sc-download-btn');
+    const scStartOverBtn = document.getElementById('sc-start-over-btn');
+
+    let scFiles = [];
+    let scBlobUrl = null;
+
+    function formatBytes(b) {
+      if (b < 1024) return b + ' B';
+      if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+      return (b / 1048576).toFixed(1) + ' MB';
+    }
+
+    function renderFileList() {
+      if (scFiles.length === 0) {
+        scFileList.classList.add('hidden');
+        scActionBtns.classList.add('hidden');
+        scUploadZone.classList.remove('hidden');
+        return;
+      }
+      scUploadZone.classList.add('hidden');
+      scFileList.classList.remove('hidden');
+      scActionBtns.classList.remove('hidden');
+
+      scFileList.innerHTML = scFiles.map((f, i) => `
+        <div class="file-badge" style="margin-bottom:6px">
+          <div class="file-icon-wrap">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" fill="none" stroke-width="1.8"/><polyline points="14 2 14 8 20 8" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" fill="none" stroke-width="1.8"/></svg>
+          </div>
+          <div class="file-details">
+            <span class="file-name">${f.name}</span>
+            <span class="file-meta">${formatBytes(f.size)}</span>
+          </div>
+          <button class="btn-remove" data-idx="${i}" type="button" title="Remove">&times;</button>
+        </div>
+      `).join('') + `
+        <div style="margin-top:8px">
+          <button class="btn btn-sm btn-outline" id="sc-add-more-btn" type="button">+ Add More Files</button>
+        </div>
+      `;
+
+      // Remove individual file
+      scFileList.querySelectorAll('.btn-remove').forEach(btn => {
+        btn.addEventListener('click', () => {
+          scFiles.splice(parseInt(btn.dataset.idx), 1);
+          renderFileList();
+        });
+      });
+
+      // Add more files
+      document.getElementById('sc-add-more-btn').addEventListener('click', () => scFileInput.click());
+    }
+
+    // Browse button
+    scBrowseBtn.addEventListener('click', () => scFileInput.click());
+
+    // File input change
+    scFileInput.addEventListener('change', (e) => {
+      scFiles.push(...Array.from(e.target.files));
+      scFileInput.value = '';
+      renderFileList();
+    });
+
+    // Drag & drop
+    scUploadZone.addEventListener('dragover', (e) => { e.preventDefault(); scUploadZone.classList.add('drag-over'); });
+    scUploadZone.addEventListener('dragleave', () => scUploadZone.classList.remove('drag-over'));
+    scUploadZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      scUploadZone.classList.remove('drag-over');
+      const dropped = Array.from(e.dataTransfer.files).filter(f => /\.(txt|csv|log)$/i.test(f.name));
+      if (dropped.length) { scFiles.push(...dropped); renderFileList(); }
+    });
+
+    // Clear
+    scClearBtn.addEventListener('click', () => { scFiles = []; renderFileList(); });
+
+    // Process
+    scProcessBtn.addEventListener('click', async () => {
+      scUploadView.classList.add('hidden');
+      scProcessingView.classList.remove('hidden');
+      scResultsView.classList.add('hidden');
+
+      try {
+        const result = await consolidateTextFiles(scFiles);
+        if (scBlobUrl) URL.revokeObjectURL(scBlobUrl);
+        scBlobUrl = URL.createObjectURL(result.workbookBlob);
+
+        // Show stats
+        scStatsGrid.innerHTML = [
+          { label: 'Files', value: result.fileCount },
+          { label: 'Total Entries', value: result.totalEntries.toLocaleString() },
+          { label: 'Unique Entries', value: result.uniqueEntries.toLocaleString() },
+          { label: 'Most Frequent', value: result.topEntry ? result.topEntry.value : '—' },
+          { label: 'Top Count', value: result.topEntry ? result.topEntry.count : '—' },
+        ].map(s => `<div class="stat-card"><div class="stat-label">${s.label}</div><div class="stat-value">${s.value}</div></div>`).join('');
+
+        scProcessingView.classList.add('hidden');
+        scResultsView.classList.remove('hidden');
+      } catch (err) {
+        scProcessingView.classList.add('hidden');
+        scUploadView.classList.remove('hidden');
+        // Reuse the error modal from the main app
+        document.getElementById('error-modal-message').textContent = err.message;
+        document.getElementById('error-modal').classList.remove('hidden');
+      }
+    });
+
+    // Download
+    scDownloadBtn.addEventListener('click', () => {
+      if (!scBlobUrl) return;
+      const a = document.createElement('a');
+      a.href = scBlobUrl;
+      a.download = 'Consolidated_Scans.xlsx';
+      a.click();
+    });
+
+    // Start over
+    scStartOverBtn.addEventListener('click', () => {
+      scFiles = [];
+      if (scBlobUrl) { URL.revokeObjectURL(scBlobUrl); scBlobUrl = null; }
+      scResultsView.classList.add('hidden');
+      scUploadView.classList.remove('hidden');
+      scUploadZone.classList.remove('hidden');
+      scFileList.classList.add('hidden');
+      scActionBtns.classList.add('hidden');
+    });
+  </script>
 
   <!-- Particles + Smooth Scroll (inline, non-module) -->
   <script>
