@@ -253,6 +253,13 @@
             </div>
             <h2>Processing Complete</h2>
             <div class="stats-grid" id="stats-grid"></div>
+            <div class="filename-input-wrap">
+              <label for="sort-filename-input">Save as</label>
+              <div class="filename-input-row">
+                <input type="text" id="sort-filename-input" placeholder="NISSI_Processed_2026-06-02" autocomplete="off" spellcheck="false">
+                <span class="filename-ext">.xlsx</span>
+              </div>
+            </div>
             <div class="btn-group" style="justify-content:center; flex-wrap:wrap;">
               <button class="btn btn-success" id="download-btn" type="button">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -327,6 +334,13 @@
           </div>
           <h2>Consolidation Complete</h2>
           <div class="stats-grid" id="sc-stats-grid"></div>
+          <div class="filename-input-wrap">
+            <label for="sc-filename-input">Save as</label>
+            <div class="filename-input-row">
+              <input type="text" id="sc-filename-input" placeholder="Consolidated_Scans" autocomplete="off" spellcheck="false">
+              <span class="filename-ext">.xlsx</span>
+            </div>
+          </div>
           <div class="btn-group" style="justify-content:center; flex-wrap:wrap;">
             <button class="btn btn-success" id="sc-download-btn" type="button">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -500,9 +514,12 @@
     // Download
     scDownloadBtn.addEventListener('click', () => {
       if (!scBlobUrl) return;
+      const nameInput = document.getElementById('sc-filename-input');
+      const rawName = (nameInput && nameInput.value.trim()) || 'Consolidated_Scans';
+      const filename = rawName.endsWith('.xlsx') ? rawName : rawName + '.xlsx';
       const a = document.createElement('a');
       a.href = scBlobUrl;
-      a.download = 'Consolidated_Scans.xlsx';
+      a.download = filename;
       a.click();
     });
 

@@ -299,7 +299,7 @@ export function buildOutputRows(rows) {
     return {
       Old_Barcode: row['SWXref'] ?? '',
       BC: bc,
-      Article: row['SKU NUM'] ?? '',
+      Variant: row['SKU NUM'] ?? '',
       Units: row.__units ?? 0,
       SORT1: row.__sort1 ?? '',
       SORT2: row.__sort2 ?? '',

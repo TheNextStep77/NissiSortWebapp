@@ -1,27 +1,29 @@
 /* ============================================================
    NISSI Excel Writer
    ─────────────────────────────────────────────────────────────
-   Generates and downloads the final .xlsx output file
-   using SheetJS with values only (no formulas).
+   Generates the final .xlsx output as a Blob (no auto-download)
+   so the caller can name the file before saving.
+   Column order: Old_Barcode | Variant | BC | Units | SORT1-4 | ScanCount
    ============================================================ */
 
 /**
- * Generate and trigger download of the processed Excel file.
+ * Build a processed Excel workbook and return it as a Blob.
+ * Caller is responsible for triggering the download with the chosen filename.
  *
- * @param {Object[]} outputRows - Array of cleaned output row objects with final column names.
- * @param {string} [filename='NISSI_Processed_Output.xlsx'] - The download filename.
+ * @param {Object[]} outputRows - Array of output row objects from processor.js
+ * @returns {Blob} .xlsx file blob
  */
-export function downloadExcel(outputRows, filename = 'NISSI_Processed_Output.xlsx') {
+export function buildExcelBlob(outputRows) {
   const XLSX = window.XLSX;
   if (!XLSX) {
     throw new Error('SheetJS library (XLSX) is not loaded.');
   }
 
-  // Define the exact column order for the output
+  // Column order: Old_Barcode | Variant (moved to col 2) | BC | Units | SORT1-4 | ScanCount
   const columnOrder = [
     'Old_Barcode',
+    'Variant',
     'BC',
-    'Article',
     'Units',
     'SORT1',
     'SORT2',
@@ -30,16 +32,13 @@ export function downloadExcel(outputRows, filename = 'NISSI_Processed_Output.xls
     'ScanCount',
   ];
 
-  // Build worksheet from JSON with explicit column ordering
-  const ws = XLSX.utils.json_to_sheet(outputRows, {
-    header: columnOrder,
-  });
+  const ws = XLSX.utils.json_to_sheet(outputRows, { header: columnOrder });
 
-  // Set column widths for readability
+  // Column widths
   ws['!cols'] = [
     { wch: 18 },  // Old_Barcode
+    { wch: 14 },  // Variant
     { wch: 24 },  // BC
-    { wch: 14 },  // Article
     { wch: 8 },   // Units
     { wch: 8 },   // SORT1
     { wch: 8 },   // SORT2
@@ -48,31 +47,33 @@ export function downloadExcel(outputRows, filename = 'NISSI_Processed_Output.xls
     { wch: 12 },  // ScanCount
   ];
 
-  // Create workbook
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'Processed Output');
 
-  // Write and download — bookType: 'xlsx' ensures .xlsx format
-  // type: 'array' generates an ArrayBuffer for clean download
   const wbOut = XLSX.write(wb, {
     bookType: 'xlsx',
     type: 'array',
-    bookSST: false, // Don't use shared string table — keeps values simple
+    bookSST: false,
   });
 
-  // Create blob and trigger download
-  const blob = new Blob([wbOut], {
+  return new Blob([wbOut], {
     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   });
+}
 
+/**
+ * Trigger a browser download from a Blob.
+ *
+ * @param {Blob} blob
+ * @param {string} filename
+ */
+export function downloadBlob(blob, filename) {
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = filename;
+  link.download = filename.endsWith('.xlsx') ? filename : filename + '.xlsx';
   document.body.appendChild(link);
   link.click();
-
-  // Cleanup
   setTimeout(() => {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);

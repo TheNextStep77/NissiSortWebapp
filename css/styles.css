@@ -592,6 +592,62 @@ body {
 
 .btn-remove:hover { background: rgba(239, 68, 68, 0.15); }
 
+/* ── Filename Input ───────────────────────────────────────── */
+.filename-input-wrap {
+  margin: 0 auto 20px;
+  max-width: 380px;
+  text-align: left;
+}
+
+.filename-input-wrap label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+
+.filename-input-row {
+  display: flex;
+  align-items: center;
+  background: var(--pearl-white);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.filename-input-row:focus-within {
+  border-color: var(--blue-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filename-input-row input[type="text"] {
+  flex: 1;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Inter', monospace;
+  font-size: 0.88rem;
+  color: var(--text-dark);
+}
+
+.filename-input-row input[type="text"]::placeholder {
+  color: var(--text-muted);
+}
+
+.filename-ext {
+  padding: 10px 14px 10px 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 /* ── Buttons ──────────────────────────────────────────────── */
 .btn {
   display: inline-flex;

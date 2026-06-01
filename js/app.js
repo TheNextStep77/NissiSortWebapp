@@ -7,7 +7,7 @@
 
 import { parseExcelFile } from './parser.js';
 import { expandRange, processAll } from './processor.js';
-import { downloadExcel } from './writer.js';
+import { buildExcelBlob, downloadBlob } from './writer.js';
 
 /* ── State ────────────────────────────────────────────────── */
 const state = {
@@ -397,10 +397,12 @@ function initResultsStep() {
     if (!state.processedResult || !state.processedResult.data) return;
 
     try {
-      // Generate filename with timestamp
+      const nameInput = document.getElementById('sort-filename-input');
+      const rawName = (nameInput && nameInput.value.trim()) || '';
       const timestamp = new Date().toISOString().slice(0, 10);
-      const filename = `NISSI_Processed_${timestamp}.xlsx`;
-      downloadExcel(state.processedResult.data, filename);
+      const filename = rawName || `NISSI_Processed_${timestamp}`;
+      const blob = buildExcelBlob(state.processedResult.data);
+      downloadBlob(blob, filename);
       showToast('File downloaded successfully!', 'success');
     } catch (err) {
       showError('Failed to generate Excel file: ' + err.message);
