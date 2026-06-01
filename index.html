@@ -55,7 +55,6 @@
       <div class="nav-links">
         <a href="#home" class="active">Home</a>
         <a href="#processor">Process</a>
-        <a href="#about">About</a>
       </div>
       <button class="nav-cta" id="get-started-btn" type="button">Get Started</button>
     </div>
@@ -270,37 +269,13 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════
-       HOW IT WORKS
-       ═══════════════════════════════════════════════════ -->
-  <section id="about" class="section">
-    <div class="container">
-      <h2 class="section-title">How It Works</h2>
-      <div class="how-it-works">
-        <div class="how-step">
-          <strong>Step 1 — Upload &amp; Parse</strong>
-          Upload your Excel workbook (.xlsx). The engine reads the "Article Detail" sheet using SheetJS, validates required columns (SWXref, BC, SKU NUM), and identifies all available Trailer columns automatically.
-        </div>
-        <div class="how-step">
-          <strong>Step 2 — Configure Trailers &amp; SORT Ranges</strong>
-          Select which Trailer columns to sum for the Units calculation. Then define character ranges (e.g., A-E, 1-6) for SORT1 through SORT4. The engine expands ranges into individual values and calculates total capacity in real time.
-        </div>
-        <div class="how-step">
-          <strong>Step 3 — Intelligent Processing</strong>
-          The engine calculates Units, filters rows (removing those under 10 units while preserving "Regular Scan" rows), validates SORT capacity, and applies a 4-stage hierarchical allocation algorithm that distributes SORT codes evenly by unit volume — guaranteeing unique combinations across all output rows.
-        </div>
-        <div class="how-step">
-          <strong>Step 4 — Download</strong>
-          The processed output is generated as a clean .xlsx file with only the required columns (Old_Barcode, BC, Article, Units, SORT1–4, ScanCount), sorted by SORT fields ascending and Units descending. All values are flat — no formulas.
-        </div>
-      </div>
-    </div>
-  </section>
+
 
   <!-- ─── Footer ──────────────────────────────────────── -->
   <footer class="app-footer">
     <div class="container">
       <p>&copy; 2026 Nissi Fulfillment and Distribution. All rights reserved.</p>
+      <p style="margin-top:4px;font-size:0.78rem;">Developed by Vanguard Solutions</p>
     </div>
   </footer>
 
