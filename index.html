@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nissi Fulfillment and Distribution | Excel Processing Engine</title>
+  <meta name="description" content="Nissi Fulfillment and Distribution — Upload, configure, and process Excel files with intelligent SORT allocation and automated trailer unit calculation.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+</head>
+<body>
+
+  <!-- ─── Animated SVG Wave Background ────────────────── -->
+  <svg id="svg-background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="wg1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.25"/>
+        <stop offset="100%" style="stop-color:#2563eb;stop-opacity:0.15"/>
+      </linearGradient>
+      <linearGradient id="wg2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#93c5fd;stop-opacity:0.2"/>
+        <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0.12"/>
+      </linearGradient>
+      <linearGradient id="wg3" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#2563eb;stop-opacity:0.15"/>
+        <stop offset="100%" style="stop-color:#93c5fd;stop-opacity:0.08"/>
+      </linearGradient>
+    </defs>
+    <path fill="url(#wg1)">
+      <animate attributeName="d" dur="20s" repeatCount="indefinite" values="M0,160 C320,300,420,300,740,160 C1060,20,1120,20,1440,160 V320 H0 V160 Z;M0,100 C320,20,420,20,740,100 C1060,180,1120,180,1440,100 V320 H0 V100 Z;M0,160 C320,300,420,300,740,160 C1060,20,1120,20,1440,160 V320 H0 V160 Z"/>
+    </path>
+    <path fill="url(#wg2)">
+      <animate attributeName="d" dur="15s" repeatCount="indefinite" values="M0,100 C320,180,420,180,740,100 C1060,20,1120,20,1440,100 V320 H0 V100 Z;M0,160 C320,300,420,300,740,160 C1060,20,1120,20,1440,160 V320 H0 V160 Z;M0,100 C320,180,420,180,740,100 C1060,20,1120,20,1440,100 V320 H0 V100 Z"/>
+    </path>
+    <path fill="url(#wg3)">
+      <animate attributeName="d" dur="25s" repeatCount="indefinite" values="M0,130 C320,250,420,250,740,130 C1060,10,1120,10,1440,130 V320 H0 V130 Z;M0,80 C320,10,420,10,740,80 C1060,150,1120,150,1440,80 V320 H0 V80 Z;M0,130 C320,250,420,250,740,130 C1060,10,1120,10,1440,130 V320 H0 V130 Z"/>
+    </path>
+  </svg>
+
+  <!-- ─── Floating Particles ──────────────────────────── -->
+  <div class="bg-particles" id="bg-particles" aria-hidden="true"></div>
+
+  <!-- ─── Toast Container ─────────────────────────────── -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- ─── Navbar ──────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <a class="logo" href="#home">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        Nissi Fulfillment and Distribution
+      </a>
+      <div class="nav-links">
+        <a href="#home" class="active">Home</a>
+        <a href="#processor">Process</a>
+        <a href="#about">About</a>
+      </div>
+      <button class="nav-cta" id="get-started-btn" type="button">Get Started</button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════
+       HERO SECTION
+       ═══════════════════════════════════════════════════ -->
+  <section id="home" class="hero">
+    <span class="hero-badge">Excel Processing Engine</span>
+    <h1>Nissi Fulfillment<br>and Distribution</h1>
+    <p>Upload trailer spreadsheets, configure sort ranges, and generate processed Excel outputs with intelligent SORT allocation — all in your browser.</p>
+    <button class="hero-cta" id="hero-cta-btn" type="button">Start Processing</button>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       PROCESSOR SECTION
+       ═══════════════════════════════════════════════════ -->
+  <section id="processor" class="section">
+    <div class="container">
+      <h2 class="section-title">Excel Processor</h2>
+
+      <div class="wizard-card">
+        <!-- Wizard Nav -->
+        <nav class="wizard-nav" aria-label="Processing steps">
+          <div class="wizard-step active" data-step="1" id="wizard-step-1">
+            <div class="step-circle">
+              <span class="step-num">1</span>
+              <svg class="step-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="step-label">Upload</span>
+          </div>
+          <div class="step-connector" id="connector-1-2"></div>
+          <div class="wizard-step" data-step="2" id="wizard-step-2">
+            <div class="step-circle">
+              <span class="step-num">2</span>
+              <svg class="step-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="step-label">Trailers</span>
+          </div>
+          <div class="step-connector" id="connector-2-3"></div>
+          <div class="wizard-step" data-step="3" id="wizard-step-3">
+            <div class="step-circle">
+              <span class="step-num">3</span>
+              <svg class="step-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="step-label">Sort Config</span>
+          </div>
+          <div class="step-connector" id="connector-3-4"></div>
+          <div class="wizard-step" data-step="4" id="wizard-step-4">
+            <div class="step-circle">
+              <span class="step-num">4</span>
+              <svg class="step-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="step-label">Results</span>
+          </div>
+        </nav>
+
+        <!-- ── Step 1: Upload ──────────────────────────── -->
+        <div id="step-1" class="step-content active">
+          <div id="upload-zone" class="upload-zone" tabindex="0" role="button" aria-label="Upload Excel file">
+            <div class="upload-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="17 8 12 3 7 8" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="12" y1="3" x2="12" y2="15" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Upload Your Excel File</h3>
+            <p>Drag &amp; drop your <strong>.xlsx</strong> workbook here, or click to browse.</p>
+            <input type="file" id="file-input" accept=".xlsx,.xls" hidden aria-label="Choose Excel file">
+            <button class="btn btn-primary" id="browse-btn" type="button">Browse Files</button>
+            <div class="supported">Accepts .xlsx and .xls files with trailer data</div>
+          </div>
+
+          <div id="file-info" class="file-info hidden">
+            <div class="file-badge">
+              <div class="file-icon-wrap">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="14 2 14 8 20 8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="file-details">
+                <span class="file-name" id="file-name"></span>
+                <span class="file-meta" id="file-meta"></span>
+              </div>
+              <button class="btn-remove" id="remove-file-btn" type="button" title="Remove file">&times;</button>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-primary" id="next-step-2-btn" type="button">
+                Continue
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Step 2: Trailer Selection ───────────────── -->
+        <div id="step-2" class="step-content">
+          <h2>Select Trailer Columns</h2>
+          <p class="step-desc">Choose which trailer columns to sum for calculating each row's <strong>Units</strong> value. Non-selected columns are ignored.</p>
+
+          <div class="select-all-wrap">
+            <button class="btn btn-sm btn-outline" id="select-all-btn" type="button">Select All</button>
+            <button class="btn btn-sm btn-outline" id="deselect-all-btn" type="button">Deselect All</button>
+          </div>
+
+          <div class="checkbox-grid" id="trailer-checkboxes" role="group" aria-label="Trailer columns"></div>
+
+          <div class="btn-group">
+            <button class="btn btn-secondary" id="back-step-1-btn" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button class="btn btn-primary" id="next-step-3-btn" type="button" disabled>
+              Continue
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── Step 3: SORT Configuration ──────────────── -->
+        <div id="step-3" class="step-content">
+          <h2>Configure SORT Ranges</h2>
+          <p class="step-desc">Enter character ranges for each SORT field. Use formats like <strong>A-E</strong>, <strong>1-6</strong>, comma-separated values, or <strong>blank</strong> for SORT4 if unused.</p>
+
+          <div class="sort-fields">
+            <div class="sort-field">
+              <div class="sort-field-header">
+                <label for="sort1-input">SORT1 <span style="color:var(--rose)">*</span></label>
+                <span class="hint">e.g., A-E or 1-5</span>
+              </div>
+              <input type="text" id="sort1-input" placeholder="A-E" autocomplete="off" spellcheck="false">
+              <div class="sort-preview" id="sort1-preview"></div>
+            </div>
+            <div class="sort-field">
+              <div class="sort-field-header">
+                <label for="sort2-input">SORT2 <span style="color:var(--rose)">*</span></label>
+                <span class="hint">e.g., 1-6 or A-F</span>
+              </div>
+              <input type="text" id="sort2-input" placeholder="1-6" autocomplete="off" spellcheck="false">
+              <div class="sort-preview" id="sort2-preview"></div>
+            </div>
+            <div class="sort-field">
+              <div class="sort-field-header">
+                <label for="sort3-input">SORT3 <span style="color:var(--rose)">*</span></label>
+                <span class="hint">e.g., A-F or 0-9</span>
+              </div>
+              <input type="text" id="sort3-input" placeholder="A-F" autocomplete="off" spellcheck="false">
+              <div class="sort-preview" id="sort3-preview"></div>
+            </div>
+            <div class="sort-field">
+              <div class="sort-field-header">
+                <label for="sort4-input">SORT4</label>
+                <span class="hint">e.g., 1-8 or blank</span>
+              </div>
+              <input type="text" id="sort4-input" placeholder="1-8 or blank" autocomplete="off" spellcheck="false">
+              <div class="sort-preview" id="sort4-preview"></div>
+            </div>
+          </div>
+
+          <div class="capacity-info hidden" id="capacity-info">
+            <span class="cap-icon"></span>
+            <span class="cap-text"></span>
+            <span class="cap-number"></span>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn btn-secondary" id="back-step-2-btn" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button class="btn btn-primary" id="process-btn" type="button" disabled>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Process File
+            </button>
+          </div>
+        </div>
+
+        <!-- ── Step 4: Results ─────────────────────────── -->
+        <div id="step-4" class="step-content">
+          <div id="processing-view" class="processing-view">
+            <div class="spinner-ring"></div>
+            <h2>Processing Your File</h2>
+            <p>Calculating units, filtering rows, and allocating SORT values…</p>
+          </div>
+
+          <div id="results-view" class="results-view hidden">
+            <div class="success-badge">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="22 4 12 14.01 9 11.01" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h2>Processing Complete</h2>
+            <div class="stats-grid" id="stats-grid"></div>
+            <div class="btn-group" style="justify-content:center; flex-wrap:wrap;">
+              <button class="btn btn-success" id="download-btn" type="button">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download Excel
+              </button>
+              <button class="btn btn-outline" id="start-over-btn" type="button">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                Process Another File
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.wizard-card -->
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       HOW IT WORKS
+       ═══════════════════════════════════════════════════ -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2 class="section-title">How It Works</h2>
+      <div class="how-it-works">
+        <div class="how-step">
+          <strong>Step 1 — Upload &amp; Parse</strong>
+          Upload your Excel workbook (.xlsx). The engine reads the "Article Detail" sheet using SheetJS, validates required columns (SWXref, BC, SKU NUM), and identifies all available Trailer columns automatically.
+        </div>
+        <div class="how-step">
+          <strong>Step 2 — Configure Trailers &amp; SORT Ranges</strong>
+          Select which Trailer columns to sum for the Units calculation. Then define character ranges (e.g., A-E, 1-6) for SORT1 through SORT4. The engine expands ranges into individual values and calculates total capacity in real time.
+        </div>
+        <div class="how-step">
+          <strong>Step 3 — Intelligent Processing</strong>
+          The engine calculates Units, filters rows (removing those under 10 units while preserving "Regular Scan" rows), validates SORT capacity, and applies a 4-stage hierarchical allocation algorithm that distributes SORT codes evenly by unit volume — guaranteeing unique combinations across all output rows.
+        </div>
+        <div class="how-step">
+          <strong>Step 4 — Download</strong>
+          The processed output is generated as a clean .xlsx file with only the required columns (Old_Barcode, BC, Article, Units, SORT1–4, ScanCount), sorted by SORT fields ascending and Units descending. All values are flat — no formulas.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Footer ──────────────────────────────────────── -->
+  <footer class="app-footer">
+    <div class="container">
+      <p>&copy; 2026 Nissi Fulfillment and Distribution. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ─── Error Modal ─────────────────────────────────── -->
+  <div id="error-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="error-modal-title">
+    <div class="modal-card">
+      <div class="modal-icon error">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" stroke-linecap="round"/>
+          <line x1="15" y1="9" x2="9" y2="15" stroke-linecap="round"/>
+          <line x1="9" y1="9" x2="15" y2="15" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2 id="error-modal-title">Processing Error</h2>
+      <p id="error-modal-message">An unexpected error occurred.</p>
+      <button class="btn btn-primary" id="error-modal-close" type="button">Close</button>
+    </div>
+  </div>
+
+  <!-- ─── Scripts ─────────────────────────────────────── -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"
+          integrity="sha512-v9GBOYoSaKIhMO5fGE78H/7/SsHbo6S3JtjIeQzO+CZ9v85mGCdRFJMyTaOBVQGPiGS3IEhGQjFRBdLgqAMA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="module" src="js/app.js"></script>
+
+  <!-- Particles + Smooth Scroll (inline, non-module) -->
+  <script>
+    // Create floating particles
+    (function() {
+      const container = document.getElementById('bg-particles');
+      if (!container) return;
+      for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.top = (60 + Math.random() * 50) + '%';
+        p.style.animationDelay = (Math.random() * 16) + 's';
+        p.style.animationDuration = (12 + Math.random() * 10) + 's';
+        p.style.width = p.style.height = (2 + Math.random() * 2) + 'px';
+        container.appendChild(p);
+      }
+    })();
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('.nav-links a').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var target = this.getAttribute('href');
+        document.querySelector(target).scrollIntoView({ behavior: 'smooth' });
+        document.querySelectorAll('.nav-links a').forEach(function(l) { l.classList.remove('active'); });
+        this.classList.add('active');
+      });
+    });
+
+    // Hero / Nav CTA → scroll to processor
+    document.getElementById('get-started-btn').addEventListener('click', function() {
+      document.getElementById('processor').scrollIntoView({ behavior: 'smooth' });
+    });
+    document.getElementById('hero-cta-btn').addEventListener('click', function() {
+      document.getElementById('processor').scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
