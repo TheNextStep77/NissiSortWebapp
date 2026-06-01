@@ -679,16 +679,27 @@ body {
 /* ── Checkbox Grid ────────────────────────────────────────── */
 .checkbox-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
   margin-bottom: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Scrollbar styling */
+.checkbox-grid::-webkit-scrollbar { width: 5px; }
+.checkbox-grid::-webkit-scrollbar-track { background: transparent; }
+.checkbox-grid::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 10px;
 }
 
 .checkbox-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 13px 14px;
+  gap: 8px;
+  padding: 10px 12px;
   background: var(--pearl-white);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
